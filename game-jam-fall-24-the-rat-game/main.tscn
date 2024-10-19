@@ -332,6 +332,7 @@ tile_set = SubResource("TileSet_gahme")
 [node name="Player" parent="." instance=ExtResource("1_503ua")]
 unique_name_in_owner = true
 position = Vector2(-541, 272)
+scale = Vector2(1.5, 1.5)
 collision_mask = 8
 script = ExtResource("2_x4x80")
 

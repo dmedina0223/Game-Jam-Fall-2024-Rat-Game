@@ -5,8 +5,8 @@ signal CharacterDirectionChange(facing:Facing)
 
 
 enum Facing { 
-	LEFT,
-	RIGHT,
+	LEFT = -1,
+	RIGHT = 1,
 }
 
 const TERMINAL_VELOCITY = 700
@@ -21,7 +21,7 @@ var jump_velocity = DEFAULT_JUMP_VELOCITY
 #var up_cmd : Command
 #var idle : Command
 
-var facing:Facing = Facing.RIGHT
+var facing:Facing = Facing.LEFT
 
 var jumping:bool = false
 var gravity: int = ProjectSettings.get("physics/2d/default_gravity")
@@ -33,7 +33,7 @@ var _horizontal_input : float
 
 func _ready() -> void:
 	jumping = false
-	change_facing(facing)
+	change_facing()
 
 
 func _physics_process(delta: float) -> void: 
@@ -53,8 +53,13 @@ func move(value: float) -> void:
 	_horizontal_input = value
 
 
-func change_facing(new_facing:Facing) -> void:
-	facing = new_facing
+func change_facing() -> void:
+	if facing == Facing.LEFT:
+		facing = Facing.RIGHT
+		sprite.flip_h = false
+	else:
+		facing = Facing.LEFT
+		sprite.flip_h = true
 	emit_signal("CharacterDirectionChange", facing)
 
 #This function is meant to be called in the AnimationController after the each relevant anmiation has concluded.
