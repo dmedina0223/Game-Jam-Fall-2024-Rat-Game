@@ -30,7 +30,7 @@ var _horizontal_input : float
 
 @onready var animation_player:AnimationPlayer = $AnimationPlayer
 @onready var sprite:Sprite2D = $Sprite2D
-
+@onready var state_machine:AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 func _ready() -> void:
 	jumping = false
 	change_facing()

@@ -13,6 +13,7 @@ const KNOCKBACK_VERTICAL = -200.0
 
 var PLAYER_HAS_CONTROL = true
 
+@onready var jump_sfx = preload("res://assets/audio/test.mp3")
 
 
 func _physics_process(delta: float) -> void:
@@ -23,7 +24,8 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("Jump") and is_on_floor() and PLAYER_HAS_CONTROL:
 		velocity.y = JUMP_VELOCITY
-		jumping = true
+		AudioControl._play_fx(jump_sfx, -12.0)
+		#jumping = true
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -42,9 +44,17 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, GROUND_FRICTION)
 		else:
 			velocity.x = move_toward(velocity.x, 0, AIR_FRICTION)
-	
-	if is_on_floor():
-		jumping = true
+	if PLAYER_HAS_CONTROL:
+		if is_on_floor():
+			if is_zero_approx(velocity.x):
+				state_machine.travel("Idle")
+			else:
+				state_machine.travel("Running")
+		else:
+			if velocity.y < 0:
+				state_machine.travel("Jump")
+			else:
+				state_machine.travel("Fall")
 	move_and_slide()
 
 func take_knockback():
@@ -52,10 +62,12 @@ func take_knockback():
 
 	velocity.x = KNOCKBACK_HORIZONTAL * facing * -1
 	velocity.y = KNOCKBACK_VERTICAL
+	state_machine.travel("Stun")
 	
 	$KBTimer.start(3)
 
 
 func _on_kb_timer_timeout() -> void:
 	PLAYER_HAS_CONTROL = true
+	state_machine.travel("Idle")
 	pass # Replace with function body.
