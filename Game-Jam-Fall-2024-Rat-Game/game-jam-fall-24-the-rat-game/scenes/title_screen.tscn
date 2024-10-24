@@ -1,0 +1,92 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddbv7yfek4iv1"]
+
+[ext_resource type="Script" path="res://scripts/title_screen.gd" id="1_i1d0x"]
+[ext_resource type="Texture2D" uid="uid://jn5iave5o1sr" path="res://assets/background/Rat_stock_image.png" id="1_lixq2"]
+[ext_resource type="Script" path="res://scripts/quit_button.gd" id="2_2me2c"]
+
+[sub_resource type="FontFile" id="FontFile_uq0ju"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+cache/0/40/0/ascent = 0.0
+cache/0/40/0/descent = 0.0
+cache/0/40/0/underline_position = 0.0
+cache/0/40/0/underline_thickness = 0.0
+cache/0/40/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_sgy3o"]
+font = SubResource("FontFile_uq0ju")
+font_size = 40
+outline_size = 3
+shadow_size = 3
+shadow_color = Color(0.10748, 0.10748, 0.10748, 0.717647)
+
+[node name="Title Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1024.0
+offset_bottom = 768.0
+
+[node name="RatStockImage" type="Sprite2D" parent="."]
+position = Vector2(531.562, 377.625)
+scale = Vector2(1.41868, 1.8122)
+texture = ExtResource("1_lixq2")
+
+[node name="Start Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.109
+anchor_bottom = 0.115
+offset_left = 320.0
+offset_top = 640.0
+offset_right = 336.384
+offset_bottom = 615.68
+text = "START"
+script = ExtResource("1_i1d0x")
+
+[node name="Quit Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 640.0
+offset_right = 768.0
+offset_bottom = 704.0
+text = "EXIT"
+script = ExtResource("2_2me2c")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 512.0
+offset_right = 320.0
+offset_bottom = 768.0
+text = "Credits:
+Scott
+Jason
+Arisa
+Elias
+raviolidemon
+Nico
+
+"
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(0.0110876, 0.0110876, 0.0110876, 1)
+self_modulate = Color(0.864675, 0.864675, 0.864675, 1)
+light_mask = 1023
+layout_mode = 0
+offset_top = 64.0
+offset_right = 422.0
+offset_bottom = 128.0
+text = "CHEDDAR TRAILS"
+label_settings = SubResource("LabelSettings_sgy3o")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Start Button" to="Start Button" method="_on_pressed"]
+[connection signal="pressed" from="Quit Button" to="Quit Button" method="_on_pressed"]
